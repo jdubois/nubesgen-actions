@@ -26,7 +26,7 @@ runs:
         echo "ARM_SUBSCRIPTION_ID=$(echo $AZURE_CREDENTIALS | jq -r .subscriptionId)" >> $GITHUB_ENV
         echo "ARM_TENANT_ID=$(echo $AZURE_CREDENTIALS | jq -r .tenantId)" >> $GITHUB_ENV
         echo "echo $TF_STORAGE_ACCOUNT"
-        echo "TF_STORAGE_ACCOUNT=$(echo $TF_STORAGE_ACCOUNT_LOCAL)" >> $GITHUB_ENV
+        echo "TF_STORAGE_ACCOUNT_LOCAL=$(echo $TF_STORAGE_ACCOUNT)" >> $GITHUB_ENV
         echo "echo $TF_STORAGE_ACCOUNT_LOCAL"
       shell: bash
     - name: Setup Terraform
