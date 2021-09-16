@@ -53,7 +53,10 @@ runs:
       shell: bash
       working-directory: '${{ github.workspace }}/terraform'
     - name: Get application name generated in Terraform
+      env:
+        AZURE_CREDENTIALS: ${{ inputs.azure_credentials }}
       run: |
+        export ARM_CLIENT_SECRET=$(echo $AZURE_CREDENTIALS | jq -r .clientSecret)
         echo $(terraform output --raw application_name) > application_name.txt
       working-directory: '${{ github.workspace }}/terraform'
       shell: bash
