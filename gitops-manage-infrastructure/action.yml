@@ -26,8 +26,8 @@ runs:
         echo "ARM_SUBSCRIPTION_ID=$(echo $AZURE_CREDENTIALS | jq -r .subscriptionId)" >> $GITHUB_ENV
         echo "ARM_TENANT_ID=$(echo $AZURE_CREDENTIALS | jq -r .tenantId)" >> $GITHUB_ENV
         echo "echo $TF_STORAGE_ACCOUNT"
-        echo "TF_STORAGE_ACCOUNT=$(echo $TF_STORAGE_ACCOUNT)" >> $GITHUB_ENV
-        echo "echo $TF_STORAGE_ACCOUNT"
+        echo "TF_STORAGE_ACCOUNT=$(echo $TF_STORAGE_ACCOUNT_LOCAL)" >> $GITHUB_ENV
+        echo "echo $TF_STORAGE_ACCOUNT_LOCAL"
       shell: bash
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
@@ -37,12 +37,12 @@ runs:
       env:
         AZURE_CREDENTIALS: ${{ inputs.azure_credentials }}
       run: |
-        echo "echo $TF_STORAGE_ACCOUNT"
+        echo "echo $TF_STORAGE_ACCOUNT_LOCAL"
         export ARM_CLIENT_SECRET=$(echo $AZURE_CREDENTIALS | jq -r .clientSecret)
         terraform init \
         -input=false \
         -backend-config="resource_group_name=rg-terraform-001" \
-        -backend-config="storage_account_name=$TF_STORAGE_ACCOUNT" \
+        -backend-config="storage_account_name=$TF_STORAGE_ACCOUNT_LOCAL" \
         -backend-config="container_name=tfstate" \
         -backend-config="key=$ENVIRONMENT.terraform.tfstate"
       shell: bash
