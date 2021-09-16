@@ -18,12 +18,16 @@ runs:
     - name: Set environment variables
       env:
         AZURE_CREDENTIALS: ${{ inputs.azure_credentials }}
+        TF_STORAGE_ACCOUNT: ${{ inputs.tf_storage_account }}
       run: |
         TAG_NAME=${GITHUB_REF#refs/*/}
         echo "ENVIRONMENT=${TAG_NAME:4}" >> $GITHUB_ENV
         echo "ARM_CLIENT_ID=$(echo $AZURE_CREDENTIALS | jq -r .clientId)" >> $GITHUB_ENV
         echo "ARM_SUBSCRIPTION_ID=$(echo $AZURE_CREDENTIALS | jq -r .subscriptionId)" >> $GITHUB_ENV
         echo "ARM_TENANT_ID=$(echo $AZURE_CREDENTIALS | jq -r .tenantId)" >> $GITHUB_ENV
+        echo "echo $TF_STORAGE_ACCOUNT"
+        echo "TF_STORAGE_ACCOUNT=$(echo $TF_STORAGE_ACCOUNT)" >> $GITHUB_ENV
+        echo "echo $TF_STORAGE_ACCOUNT"
       shell: bash
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
@@ -32,8 +36,8 @@ runs:
     - name: Initialize Terraform
       env:
         AZURE_CREDENTIALS: ${{ inputs.azure_credentials }}
-        TF_STORAGE_ACCOUNT: ${{ inputs.tf_storage_account }}
       run: |
+        echo "echo $TF_STORAGE_ACCOUNT"
         export ARM_CLIENT_SECRET=$(echo $AZURE_CREDENTIALS | jq -r .clientSecret)
         terraform init \
         -input=false \
@@ -46,7 +50,6 @@ runs:
     - name: Apply Terraform
       env:
         AZURE_CREDENTIALS: ${{ inputs.azure_credentials }}
-        TF_STORAGE_ACCOUNT: ${{ inputs.tf_storage_account }}
       run: |
         export ARM_CLIENT_SECRET=$(echo $AZURE_CREDENTIALS | jq -r .clientSecret)
         terraform apply \
