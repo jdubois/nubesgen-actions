@@ -7,7 +7,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Download application Azure Cloud Adoption Framework name
+    - name: Download Terraform output data
       uses: actions/download-artifact@v2
       with:
         name: terraform-output
