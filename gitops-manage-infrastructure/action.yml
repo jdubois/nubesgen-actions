@@ -57,12 +57,12 @@ runs:
         AZURE_CREDENTIALS: ${{ inputs.azure_credentials }}
       run: |
         export ARM_CLIENT_SECRET=$(echo $AZURE_CREDENTIALS | jq -r .clientSecret)
-        echo $(terraform output --raw application_caf_name) > application_caf_name.txt
+        echo $(terraform output -json) > terraform-output.json
       working-directory: '${{ github.workspace }}/terraform'
       shell: bash
     - name: Save application name
       uses: actions/upload-artifact@v2
       with:
-        name: application_caf_name
-        path: '${{ github.workspace }}/terraform/application_caf_name.txt'
+        name: terraform-output
+        path: '${{ github.workspace }}/terraform/terraform-output.json'
         retention-days: 1

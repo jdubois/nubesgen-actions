@@ -10,10 +10,10 @@ runs:
     - name: Download application Azure Cloud Adoption Framework name
       uses: actions/download-artifact@v2
       with:
-        name: application_caf_name
+        name: terraform-output
     - name: Set environment variables
       run: |
-        echo "APPLICATION_CAF_NAME=$(cat application_caf_name.txt)" >> $GITHUB_ENV
+        echo "APPLICATION_CAF_NAME=$(cat terraform-output.json | jq -r .application_caf_name.value)" >> $GITHUB_ENV
       shell: bash
     - name: Download application package
       uses: actions/download-artifact@v2
