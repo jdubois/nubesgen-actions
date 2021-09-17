@@ -1,5 +1,5 @@
-name: 'Build a .NET application'
-description: 'Build a .NET application'
+name: 'Build a .NET serverless function'
+description: 'Build a .NET serverless function'
 inputs:
   dotnet_version:
     description: 'The .NET version'
@@ -12,11 +12,7 @@ inputs:
   build_command:
     description: 'The command to build the .NET project'
     required: false
-    default: 'dotnet build --configuration Release'
-  publish_command:
-    description: 'The command to publish the .NET project'
-    required: false
-    default: 'dotnet publish -c Release -o output'
+    default: 'dotnet build --configuration Release -o output'
 runs:
   using: "composite"
   steps:
@@ -29,10 +25,6 @@ runs:
     - name: Build .NET application
       working-directory: ${{ inputs.application_package_path }}
       run: ${{ inputs.build_command }}
-      shell: bash
-    - name: Publish .NET app
-      run: ${{ inputs.publish_command }}
-      working-directory: ${{ inputs.application_package_path }}
       shell: bash
     - name: Temporarily save package
       uses: actions/upload-artifact@v2
