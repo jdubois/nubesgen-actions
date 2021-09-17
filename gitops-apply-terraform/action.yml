@@ -1,4 +1,4 @@
-name: 'Manage infrastructure'
+name: 'Apply Terraform configuration'
 description: 'Create or update the Azure infrastructure using Terraform'
 inputs:
   azure_credentials:
