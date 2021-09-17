@@ -1,4 +1,4 @@
-name: 'Build'
+name: 'Build a NodeJS project'
 description: 'Build a NodeJS project'
 inputs:
   nodejs_version:
